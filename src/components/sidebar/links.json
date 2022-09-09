@@ -1,0 +1,24 @@
+{
+  "links":[
+    {
+      "path": "/",
+      "content": "Dashboard"
+    },
+    {
+      "path": "/agreements",
+      "content": "Shartnomalar"
+    },
+    {
+      "path": "/passports",
+      "content": "Passport bo‘yicha"
+    },
+    {
+      "path": "/users",
+      "content": "Foydalanuvchilar"
+    },
+    {
+      "path": "/companies",
+      "content": "Kompaniyalar"
+    }
+  ]
+}
