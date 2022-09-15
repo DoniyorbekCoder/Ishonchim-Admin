@@ -1,4 +1,3 @@
-import type { Tag } from "../tags";
 import type { Category, List } from "../types";
 
 export interface Book {
@@ -12,7 +11,6 @@ export interface Book {
   image: string,
   timeline: boolean,
   url: string
-  tags: Tag[]
 }
 export interface Form {
   id: number | null,
@@ -25,5 +23,4 @@ export interface Form {
   url: string | null,
   timeline: boolean | null,
   image: string | null
-  tags: Tag[]
 }

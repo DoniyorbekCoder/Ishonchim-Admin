@@ -1,45 +1,55 @@
 <script setup lang="ts">
 import { defineAsyncComponent, ref } from 'vue'
-// import type { Article } from '@/services/article'
-// import { getArticles } from '@/services/article'
 import { useRouter, useRoute } from 'vue-router'
 import { _deleteModal, _loading, _toast, OPEN_DELETE_MODAL, OPEN_LOADING_MODAL, CLOSE_LOADING_MODAL, OPEN_NOTIFICATION } from '@/store'
-import ImageBox from '../../components/ImageBox.vue'
-import TheModal from './TheModal.vue'
+import { getUsers } from '@/services/user';
+import type { User } from '@/services/user';
 const route = useRoute()
 const router = useRouter()
 
 const TableTitle = defineAsyncComponent(() => import('@/components/user/TableTitle.vue'));
 const TableItem = defineAsyncComponent(() => import('@/components/user/TableItem.vue'))
 
-// const items = ref<{isLoading: boolean, count: number, list: Article[]}>({
-//     isLoading: false,
-//     count: 0,
-//     list: []
-// })
+const TheModal = defineAsyncComponent(() =>
+  import('./TheModal.vue')
+)
 
-// async function changeQuery(param: { key: string, value:number }) {
-//     const query = {
-//         ...route.query
-//     }
-//     if (param.key == 'type') {
-//       query['offset'] = '0'
-//     }
-//     query[param.key] = String(param.value)
-//     await router.replace({ query })
-//     getItems()
-// }
+const items = ref<{isLoading: boolean, count: number, list: User[]}>({
+    isLoading: false,
+    count: 0,
+    list: []
+})
+
+async function changeQuery(param: { key: string, value:number }) {
+    const query = {
+        ...route.query
+    }
+    if (param.key == 'type') {
+      query['offset'] = '0'
+    }
+    query[param.key] = String(param.value)
+    await router.replace({ query })
+    getItems()
+}
+
+const modalRef = ref()
 const searchInput = ref('')
-// async function getItems() {
-//     const { type = 1, offset = 0 } = route.query
-//     OPEN_LOADING_MODAL()
-//     const [error, response] = await getArticles(Number(type), searchInput.value, Number(offset))
-//     CLOSE_LOADING_MODAL()
-//     items.value.count = response.count
-//     items.value.list = response.list
-// }
+async function getItems() {
+    const { type = 1, offset = 0 } = route.query
+    OPEN_LOADING_MODAL()
+    const [error, response] = await getUsers(Number(type), searchInput.value, Number(offset))
+    console.log(response);
+    
+    CLOSE_LOADING_MODAL()
+    items.value.count = response.count
+    items.value.list = response.list
+}
 
-// getItems()
+function openModal(val: any) {
+  modalRef.value.open(val)
+}
+
+getItems()
 </script>
 <template>
 <div class="w-full">
@@ -57,15 +67,13 @@ const searchInput = ref('')
             </div>
         </div>
     </div>
-    <the-modal />
     <div class="w-full p-15 rounded-15 bg-white-primary">
         <table-title />
         <div class="rounded text-sm text-black-primary font-medium my-15 gap-10">
-            <table-item  v-for="n in 5" />
+            <table-item  v-for="item in items.list" :key="item.id" :id="item.id" :username="item.username" :password="item.password" :firstName="item.firstName" :lastName="item.lastName" :birthday="item.birthday" :isMan="item.isMan" :bio="item.bio" :balance="item.balance" :phone="item.phone" :jobs="item.jobs" :token="item.token" :type="item.type" :image="item.image" :passport="item.passport"  />
         </div>
-        <!-- <question-item v-for="question in items.list" :key="question.id" :id="question.id" :title="question.title" :category="question.category" :question="question.question" :answer="question.answer" :slug="question.slug" /> -->
     </div>
-    <!-- <base-pagination :active="Math.trunc(Number(route.query.offset)/12) + 1 || 1" :perPage="12" :items="items.count" @change="(val:number) => changeQuery({key: 'offset', value: (val - 1)*12})"/> -->
-    <!-- <the-modal ref="modalRef" @submit="OPEN_LOADING_MODAL" @toast="val => OPEN_NOTIFICATION({text: val, callback: getItems })"/> -->
+    <base-pagination :active="Math.trunc(Number(route.query.offset)/6) + 1 || 1" :perPage="6" :items="items.count" @change="(val:number) => changeQuery({key: 'offset', value: (val - 1)*6})"/>
+    <the-modal ref="modalRef" @submit="OPEN_LOADING_MODAL" @toast="val => OPEN_NOTIFICATION({text: val, callback: getItems })"/>
 </div>
 </template>

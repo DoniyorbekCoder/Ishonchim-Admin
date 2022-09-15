@@ -35,6 +35,7 @@ function CLOSE_DELETE() {
     _deleteModal.url = ''
     _deleteModal.title = ''
 }
+
 export {
     _deleteModal,
     OPEN_DELETE_MODAL,

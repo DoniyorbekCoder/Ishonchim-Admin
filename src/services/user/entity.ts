@@ -1,0 +1,41 @@
+export interface User {
+   id: number,
+   username: string,
+   password: string,
+   firstName: string,
+   lastName: string,
+   birthday: string,
+   isMan: boolean,
+   bio: string,
+   balance: number,
+   phone: string,
+   jobs: string,
+   token: string,
+   type: string,
+   image: string,
+   passport: Passport,
+}
+export interface Form {
+   id: number | null,
+   username: string | null,
+   password: string | null,
+   firstName: string | null,
+   lastName: string | null,
+   birthday: string | null,
+   isMan: boolean | null,
+   bio: string | null,
+   balance: number | null,
+   phone: string | null,
+   jobs: string | null,
+   token: string | null,
+   type: string | null,
+   image: string | null,
+   passport: Passport,
+}
+
+export interface Passport {
+   number?: string, 
+   pnfl?: number,
+   selfie?: string, 
+   image?: string, 
+}

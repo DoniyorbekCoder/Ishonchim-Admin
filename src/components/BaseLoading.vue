@@ -6,9 +6,7 @@ import { _loading } from '@/store/theLoading'
 <template>
   <Modal >
     <div class="box">
-      <svg>
-        <circle cx="50" cy="50" r="50"></circle>
-      </svg>
+      <svg><circle cx="50" cy="50" r="50"></circle></svg>
     </div>
   </Modal>
 </template>

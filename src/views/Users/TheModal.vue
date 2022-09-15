@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { inputDate, postPutCategory, reset, tabs } from '@/services/categories';
-import type { Category, Form } from '@/services/categories'
+// import { inputDate, postPutCategory, reset, tabs } from '@/services/categories';
+import { type User, type Form, tabs, reset } from '@/services/user'
 import { defineAsyncComponent, reactive, ref } from 'vue'
 import ImageBox from '../../components/ImageBox.vue'
 const Editor = defineAsyncComponent(() =>
@@ -18,24 +18,40 @@ const title = reactive({
    }
 })
 const data = reactive<{ display: boolean, formInfo: Form, error: boolean }>({
-   display: true,
+   display: false,
    error: false,
    formInfo: {
       id: null,
-      name: { list: [{ code: 'ar', value: '' }, { code: 'eng', value: '' }, { code: 'oz', value: '' }, { code: 'ru', value: '' }, { code: 'uz', value: '' }] },
-      image: null,
-      type: ''
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      birthday: '',
+      isMan: null,
+      bio: '',
+      balance: null,
+      phone: '',
+      jobs: '',
+      token: '',
+      type: null,
+      image: '',
+      passport: {
+         number: '', 
+         pnfl: undefined,
+         selfie: '', 
+         image: '', 
+      },
    }
 });
 
-async function assign(item: Category) {
+async function assign(item: User) {
    Object.assign(data.formInfo, item)
    setTimeout(() => {
       imageRef.value.setImage(item.image)
    }, 100)
 }
 
-function open(item: Category) {
+function open(item: User) {
    title.data = tabs[0]
    data.display = true
    if (item.id !== undefined) {
@@ -56,7 +72,6 @@ async function submit() {
    //    }
    // })
    console.log("Heelooo");
-   
    data.display = false
 }
 
@@ -92,12 +107,12 @@ defineExpose({
                      <image-box ref="imageRef" class="rounded w-full h-full" />
                   </div>
                   <div class="grid items-center gap-15" :class="openTab == 1 ? 'grid-cols-1': 'grid-cols-1 lg:grid-cols-2'">
-                     <input type="number" name="" id="" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" required placeholder="Telefon raqam">
-                     <input type="text" name="" id="" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" required placeholder="Username">
-                     <input type="password" name="" id="" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" required placeholder="Parol">
-                     <input type="password" name="" id="" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" required placeholder="Parolni qayta kiriting">
-                     <input v-if="openTab == 2" type="text" name="" id="" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" maxlength="9" placeholder="Pasport seriya va raqam">
-                     <input v-if="openTab == 2" type="number" name="" id="" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" placeholder="PINFL">
+                     <input type="number" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" required placeholder="Telefon raqam">
+                     <input type="text" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" required placeholder="Username">
+                     <input type="password" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" required placeholder="Parol">
+                     <input type="password" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" required placeholder="Parolni qayta kiriting">
+                     <input v-if="openTab == 2" type="text" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" maxlength="9" placeholder="Pasport seriya va raqam">
+                     <input v-if="openTab == 2" type="number" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" placeholder="PINFL">
                   </div>
                   <div v-if="openTab == 2" class="space-y-15">
                      <div  class="text-red-primary">
@@ -125,7 +140,7 @@ defineExpose({
                         <option value="2">Android Dasturchi</option>
                         <option value="3">Web Dasturchi</option>
                      </select>
-                     <input type="text" name="" id="" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" placeholder="Chuqurroq">
+                     <input type="text" name="" id="" class="text-sm leading-19 placeholder:text-black-secondary text-black-primary px-20 py-16 border border-gray-secondary bg-white-secondary outline-none w-full rounded" placeholder="Batafsil">
                      <!-- <the-select @select="addTags" :url="'tags'" title="Teglar" />
                      <div>
                         <span class="mr-3.5" v-for="item in data.formInfo.tags" :key="item.id">{{item.name.list[3].value}}<i class="ri-close-line cursor-pointer" @click="removeTag(item)"></i></span>
@@ -133,7 +148,7 @@ defineExpose({
                   </div>
                   <div class="w-full flex justify-center">
                      <div class="w-60 h-60 rounded-full bg-white-secondary border border-gray-secondary flex items-center justify-center cursor-pointer">
-                        <img src="../../assets/iconImg/add-black.png" class="w-28 h-28" alt="">
+                        <img src="../../assets/images/add-black.png" class="w-28 h-28" alt="">
                      </div>
                   </div>
                </div>

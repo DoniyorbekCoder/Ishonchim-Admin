@@ -45,7 +45,6 @@ export async function postPutBook(formInfo: Form, image: string) {
         "image": `${image}`,
         "url": `${formInfo.url}`,
         "timeline": formInfo.timeline,
-        "tags": formInfo.tags
       }
     })
     return [null, response]
