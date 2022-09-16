@@ -21,9 +21,9 @@ async function submit() {
       <div class="bg-white-primary p-30 shadow-lg rounded-15 w-400" :class="_deleteModal.visible ? 'z-0 scale-100 animate-blowUp': ''">
         <div class="flex items-start justify-between">
           <div class="bg-red-secondary border border-red-primary w-60 h-60 flex items-center justify-center rounded-full">
-            <img src="@/assets/iconImg/delete.png" class="w-30 h-30" alt="">
+            <img src="@/assets/images/delete.png" class="w-30 h-30" alt="">
           </div>
-          <img src="@/assets/iconImg/close-black.png" class="cursor-pointer icon-close w-24 h-24" @click="CLOSE_DELETE" />
+          <img src="@/assets/images/close-black.png" class="cursor-pointer icon-close w-24 h-24" @click="CLOSE_DELETE" />
         </div>
         <div class="flex flex-col my-30">
           <p class="text-lg font-semibold text-black-primary">Diqqat, foydalanuvchini o‘chirishga aminmisiz?{{_deleteModal.text}}</p>
