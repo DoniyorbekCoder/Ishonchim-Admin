@@ -38,8 +38,6 @@ async function getItems() {
     const { type = 1, offset = 0 } = route.query
     OPEN_LOADING_MODAL()
     const [error, response] = await getUsers(Number(type), searchInput.value, Number(offset))
-    console.log(response);
-    
     CLOSE_LOADING_MODAL()
     items.value.count = response.count
     items.value.list = response.list

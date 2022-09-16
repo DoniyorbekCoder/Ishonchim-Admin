@@ -9,70 +9,40 @@ const data = reactive<{username: string, password: string, passwordError: string
 })
 
 function handleSubmit() {
-  if (data.password.length < 8) {
-    data.passwordError = 'Parol 8 ta belidan kam emas'
-    setTimeout(() => {
-      data.passwordError = ''
-    }, 3000)
-  }
-  if (!/\d/.test(data.password)) {
-    data.passwordError = 'Parolda kamida bitta son bor'
-    setTimeout(() => {
-      data.passwordError = ''
-    }, 3000)
-  }
-  if (!/[A-Z]+/.test(data.password)) {
-    data.passwordError = 'Parolda kamida bitta bosh harf bor'
-    setTimeout(() => {
-      data.passwordError = ''
-    }, 3000)
-  }
-  if (data.password === data.username) {
-    data.passwordError = 'Parol va foydalanuvchi nomi turli xil'
-    setTimeout(() => {
-      data.passwordError = ''
-    }, 3000)
-  }
-  if (!/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(data.password)) {
-    data.passwordError = 'Parolda kamida bitta maxsus belgi bor'
-    setTimeout(() => {
-      data.passwordError = ''
-    }, 3000)
-  }
   if (data.passwordError === '') {
     handleAuth(data).then(res => {
-    if (res[0] === null) {
-      sessionStorage.setItem('token', res[1].token)
-      router.push('/')
-    } else {
-      data.passwordError = 'Parol yoki foydalanuvchi nomi xato'
-      setTimeout(() => {
-      data.passwordError = ''
-    }, 3000)
-      router.push('/login')
-    }
-  })
+      if (res[0] === null) {
+        sessionStorage.setItem('token', res[1].token)
+        router.push('/')
+      } else {
+        data.passwordError = 'Parol yoki foydalanuvchi nomi xato'
+        setTimeout(() => {
+        data.passwordError = ''
+      }, 3000)
+        router.push('/login')
+      }
+    })
   }
 }
 </script>
 
 <template>
-  <div class="w-full h-screen flex justify-center items-center login z-10">
-    <div class="bg-white-primary p-8 rounded-2xl w-99">
+  <div class="w-full h-screen flex justify-center items-center login">
+    <div class="bg-white-primary p-30 rounded-15 min-w-480">
       <form action="" method="post" @submit.prevent="handleSubmit">
         <div class="flex flex-col">
-          <p class="font-vibes text-3xl text-green-primary">Hazratim · Admin</p>
-          <p v-if="data.passwordError !== ''" class="text-red-primary mb-3">{{data.passwordError}}</p>
-          <div class="w-full relative">
-            <input class="w-full rounded text-sm leading-4 text-black-secondary border border-gray-secondary focus:outline-none bg-gray-primary h-11.5 px-5 py-3" v-model="data.username" type="text" name="username" id="username" required  autocomplete="off">
-            <label class="label transition-all text-sm leading-4 w-full text-black-secondary absolute top-3.5 left-6" for="username">Foydalanuvchi</label>
+          <p class="font-vibes text-xxl text-blue-primary mb-15">Ishonchim · Admin</p>
+          <p v-if="data.passwordError !== ''" class="text-red-primary mb-12">{{data.passwordError}}</p>
+          <div class="w-full relative mb-15">
+            <input class="w-full rounded text-sm leading-17 text-black-secondary border border-gray-secondary focus:outline-none bg-gray-secondary h-51 px-20 py-12" v-model="data.username" type="text" name="username" id="username" required  autocomplete="off">
+            <label class="label transition-all text-sm leading-17 w-full text-black-secondary absolute top-15 left-20" for="username">Foydalanuvchi</label>
           </div>
-          <div class="w-full relative mt-3.5">
-            <input class="w-full rounded text-sm leading-4 text-black-secondary border border-gray-secondary focus:outline-none bg-gray-primary h-11.5 px-5 py-3" v-model="data.password" type="password" name="password" id="password" required>
-            <label class="label transition-all text-sm leading-4 w-full text-black-secondary absolute top-3.5 left-6" for="password">Parol</label>
+          <div class="w-full relative">
+            <input class="w-full rounded text-sm leading-17 text-black-secondary border border-gray-secondary focus:outline-none bg-gray-secondary h-51 px-20 py-12" v-model="data.password" type="password" name="password" id="password" required>
+            <label class="label transition-all text-sm leading-17 w-full text-black-secondary absolute top-15 left-20" for="password">Parol</label>
           </div>
         </div>
-        <button class="px-8 mt-8 py-3.5 bg-green-primary text-white-primary rounded" type="submit">Tizimga kirish</button>
+        <button class="px-30 mt-30 py-15 bg-blue-primary text-white-primary rounded" type="submit">Tizimga kirish</button>
       </form>
     </div>
   </div>
@@ -81,7 +51,7 @@ function handleSubmit() {
 <style scoped>
 input:focus + label,
 input:valid + label{
-  top: 10px;
+  top: 7px;
   font-size: 8px;
   line-height: 10px;
 }

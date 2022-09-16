@@ -4,7 +4,7 @@ import { _loading } from '@/store/theLoading'
 </script>
 
 <template>
-  <Modal >
+  <Modal v-if="_loading.visible">
     <div class="box">
       <svg><circle cx="50" cy="50" r="50"></circle></svg>
     </div>

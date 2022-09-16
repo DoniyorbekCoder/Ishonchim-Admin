@@ -85,9 +85,6 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* max-width: 1540px;
-  margin: 0 auto; */
   padding: 0;
   background: #F4F4F4;
 }
