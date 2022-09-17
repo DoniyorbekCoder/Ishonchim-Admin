@@ -82,7 +82,7 @@ async function loadSelections() {
 <template>
   <ul class="menu">
     <li class="dropdown w-100 dropdown-6 text-black-primary">
-      <div  class="flex justify-between items-center w-100 w-full" role="button" @click="data.visible = !data.visible">
+      <div  class="flex justify-between items-center w-full" role="button" @click="data.visible = !data.visible">
         <span>{{data.value == null ? props.title : data.value.name.list[3].value}}</span>
         <i class="ri-arrow-up-s-line" v-if="data.visible"></i>
         <i class="ri-arrow-down-s-line" v-if="!data.visible"></i>

@@ -21,9 +21,9 @@ import Sidebar from './components/sidebar/index.vue'
 <template>
   <div class="flex relative w-full">
     <Sidebar class="w-250 fixed top-0 bottom-0 overflow-y-scroll" />
-    <RouterView class="width fixed top-0 bottom-0 right-0 flex-auto px-30 md:px-50 lg:px-72 pt-20 md:pt-25 lg:pt-30 pb-40 md:pb-50 lg:pb-60 overflow-y-scroll" />
+    <RouterView class="width fixed top-0 bottom-0 right-0 flex-auto px-30 lg:px-72 pt-20 lg:pt-30 pb-30 overflow-y-scroll" />
     <!-- <Sidebar v-if="data.token != null" class="fixed top-0 bottom-0 overflow-y-scroll" :class="data.token != null ? 'w-250' : 'w-0'" /> -->
-    <!-- <RouterView class="fixed top-0 bottom-0 right-0 flex-auto px-30 md:px-50 lg:px-72 pt-20 md:pt-25 lg:pt-30 pb-40 md:pb-50 lg:pb-60 overflow-y-scroll" :class="data.token != null ? 'width' : 'w-full'" /> -->
+    <!-- <RouterView class="fixed top-0 bottom-0 right-0 flex-auto px-30 lg:px-72 pt-20 lg:pt-30 pb-40 overflow-y-scroll" :class="data.token != null ? 'width' : 'w-full'" /> -->
   </div>
   <delete-modal />
   <base-loading />

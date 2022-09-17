@@ -1,41 +1,51 @@
 <script setup lang="ts">
-import { inputDate, postPutCategory, reset, tabs } from '@/services/categories';
-import type { Category, Form } from '@/services/categories'
-import { defineAsyncComponent, reactive, ref } from 'vue'
-const Editor = defineAsyncComponent(() =>
-   import('@/components/TextEditor.vue')
-)
-const imageRef = ref()
+import { reactive, ref } from 'vue'
+import { type Company, type Form, tabs, reset } from '@/services/company'
+
 const openTab = ref(1)
+const imageRef = ref()
 const emit = defineEmits(["submit", "toast"])
-const title = reactive({
-   data: {
-      code: 'oz',
-      lang: 'O‘zbek tilida',
-      project: 'Nomi',
-      index: 2,
-   }
-})
 const data = reactive<{ display: boolean, formInfo: Form, error: boolean }>({
-   display: true,
+   display: false,
    error: false,
    formInfo: {
       id: null,
-      name: { list: [{ code: 'ar', value: '' }, { code: 'eng', value: '' }, { code: 'oz', value: '' }, { code: 'ru', value: '' }, { code: 'uz', value: '' }] },
-      image: null,
-      type: ''
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      birthday: '',
+      isMan: null,
+      bio: '',
+      balance: null,
+      phone: '',
+      jobs: '',
+      token: '',
+      type: null,
+      image: '',
+      inn: '',
+      passport: {
+         number: '', 
+         pnfl: null,
+         selfie: '', 
+         image: '', 
+      },
+      // companies: null,
+      // partners: null,
+      // code: '',
+      contractCount: null,
+      partnerCount: null
    }
 });
 
-async function assign(item: Category) {
+async function assign(item: Company) {
    Object.assign(data.formInfo, item)
    setTimeout(() => {
       imageRef.value.setImage(item.image)
    }, 100)
 }
 
-function open(item: Category) {
-   title.data = tabs[0]
+function open(item: Company) {
    data.display = true
    if (item.id !== undefined) {
       assign(item)
@@ -54,7 +64,6 @@ async function submit() {
    //       emit('toast', 'Yangi kategoriya qo‘shildi')
    //    }
    // })
-   console.log("Heelooo");
    
    data.display = false
 }
@@ -77,7 +86,7 @@ defineExpose({
             :class="data.display ? 'z-0 scale-100 animate-blowUp' : ''">
             <div class="flex items-center justify-between mb-30">
                <h2 class="text-xl font-semibold text-black-primary">{{ data.formInfo.id === null ? 'Yangi kompaniya qo‘shish' : 'Tahrirlash' }}</h2>
-               <i @click="reset(data.formInfo); data.display = false" class="cursor-pointer icon-close text-xl" />
+               <img @click="reset(data.formInfo); data.display = false" src="@/assets/images/close-black.png" class="cursor-pointer w-24 h-24" alt="">
             </div>
 
             <form @submit.prevent="submit" class="space-y-30" :class="openTab == 1 ? 'min-w-480' : 'min-w-480 md:min-w-570 lg:min-w-800'">
@@ -116,7 +125,7 @@ defineExpose({
                   </div>
                   <div class="w-full flex justify-center">
                      <div class="w-60 h-60 rounded-full bg-white-secondary border border-gray-secondary flex items-center justify-center cursor-pointer">
-                        <img src="../../assets/iconImg/add-black.png" class="w-28 h-28" alt="">
+                        <img src="@/assets/images/add-black.png" class="w-28 h-28" alt="">
                      </div>
                   </div>
                </div>

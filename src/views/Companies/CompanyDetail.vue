@@ -26,10 +26,10 @@ const AgreementTableItem = defineAsyncComponent(() => import('@/components/agree
         
          <div class="flex items-center gap-15">
             <button role="button" class="bg-yellow-secondary w-44 h-44 shrink-0 flex items-center justify-center rounded-full border border-yellow-primary" @click="openModal">
-               <i class="icon-edit-2"></i>
+               <img class="w-24 h-24" src="@/assets/images/edit.png" alt="">
             </button>
             <div role="button" class="bg-red-secondary w-44 h-44 shrink-0 flex items-center justify-center rounded-full border border-red-primary" @click="OPEN_DELETE_MODAL({ id: 5, text: 'Diqqat, maqolani o‘chirishga aminmisiz?', title: 'title', url: 'article'})">
-               <i class="icon-trash-can"></i>
+               <img class="w-24 h-24" src="@/assets/images/delete.png" alt="">
             </div>
          </div>
       </div>

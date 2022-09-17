@@ -1,14 +1,14 @@
 import { axiosInstance } from "../axios";
-import type { User, Form } from "./entity";
-export async function getUsers( search = '', offset = 0): Promise<[any, any]> {
+import type { Company, Form } from "./entity";
+export async function getCompanies( search = '', offset = 0): Promise<[any, any]> {
    try {
-      const response = await axiosInstance.get(`admin/users`, {
+      const response = await axiosInstance.get(`companies`, {
          params: {
             size: 6,
             offset: offset,
             search: search
          }
-      }) as { data: { list: User[], count: number } }
+      }) as { data: { list: Company[], count: number } }
       return [null, response.data]
    }
    catch (error) {
@@ -16,9 +16,9 @@ export async function getUsers( search = '', offset = 0): Promise<[any, any]> {
    }
 }
 
-export async function getUser(id: number | string): Promise<[any, any]> {
+export async function getCompany(id: number | string): Promise<[any, any]> {
    try {
-      const response = await axiosInstance.get(`admin/user?id=${id}`) as { data: User }
+      const response = await axiosInstance.get(`company?id=${id}`) as { data: Company }
       return [null, response.data]
    }
    catch (error) {
@@ -26,10 +26,10 @@ export async function getUser(id: number | string): Promise<[any, any]> {
    }
 }
 
-export async function postPutUser(formInfo: Form) {
+export async function postPutCompany(formInfo: Form) {
    try {
       const response = await axiosInstance({
-         url: 'user',
+         url: 'company',
          method: formInfo.id === null ? 'POST' : 'PUT',
          data: {
             "id": formInfo.id,

@@ -1,22 +1,10 @@
 <script setup lang="ts">
-// import { inputDate, postPutCategory, reset, tabs } from '@/services/categories';
+import { reactive, ref } from 'vue'
 import { type User, type Form, tabs, reset } from '@/services/user'
-import { defineAsyncComponent, reactive, ref } from 'vue'
-import ImageBox from '../../components/ImageBox.vue'
-const Editor = defineAsyncComponent(() =>
-   import('@/components/TextEditor.vue')
-)
-const imageRef = ref()
+
 const openTab = ref(1)
+const imageRef = ref()
 const emit = defineEmits(["submit", "toast"])
-const title = reactive({
-   data: {
-      code: 'oz',
-      lang: 'O‘zbek tilida',
-      project: 'Nomi',
-      index: 2,
-   }
-})
 const data = reactive<{ display: boolean, formInfo: Form, error: boolean }>({
    display: false,
    error: false,
@@ -37,10 +25,12 @@ const data = reactive<{ display: boolean, formInfo: Form, error: boolean }>({
       image: '',
       passport: {
          number: '', 
-         pnfl: undefined,
+         pnfl: null,
          selfie: '', 
          image: '', 
       },
+      contractCount: null,
+      partnerCount: null
    }
 });
 
@@ -52,7 +42,6 @@ async function assign(item: User) {
 }
 
 function open(item: User) {
-   title.data = tabs[0]
    data.display = true
    if (item.id !== undefined) {
       assign(item)
@@ -71,7 +60,6 @@ async function submit() {
    //       emit('toast', 'Yangi kategoriya qo‘shildi')
    //    }
    // })
-   console.log("Heelooo");
    data.display = false
 }
 
@@ -93,7 +81,7 @@ defineExpose({
             :class="data.display ? 'z-0 scale-100 animate-blowUp' : ''">
             <div class="flex items-center justify-between mb-30">
                <h2 class="text-xl font-semibold text-black-primary">{{ data.formInfo.id === null ? 'Yangi foydalanuvchi qo‘shish' : 'Tahrirlash' }}</h2>
-               <i @click="reset(data.formInfo); data.display = false" class="cursor-pointer icon-close text-xl" />
+               <img @click="reset(data.formInfo); data.display = false" src="@/assets/images/close-black.png" class="cursor-pointer w-24 h-24" alt="">
             </div>
 
             <form @submit.prevent="submit" class="space-y-30" :class="openTab == 1 ? 'min-w-480' : 'min-w-480 md:min-w-570 lg:min-w-800'">

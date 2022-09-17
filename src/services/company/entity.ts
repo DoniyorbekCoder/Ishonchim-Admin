@@ -1,4 +1,6 @@
-export interface User {
+import type { User } from "../user";
+
+export interface Company {
    id: number,
    username: string,
    password: string,

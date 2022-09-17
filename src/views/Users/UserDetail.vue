@@ -16,9 +16,9 @@ const UserTableItem = defineAsyncComponent(() => import('@/components/user/Table
    <div class="w-full space-y-30">
       <div class="flex items-center justify-between mb-36">
          <div class="flex items-center">
-            <div @click="router.go(-1)" class="bg-white-primary flex items-center justify-center shrink-0 rounded-full h-51 w-51" role="button">
+            <router-link to="/users" class="bg-white-primary flex items-center justify-center shrink-0 rounded-full h-51 w-51" role="button">
                <img class="w-24 h-24" src="@/assets/images/arrow-left.png" alt="">
-            </div>
+            </router-link>
             <p class="font-bold text-black-primary text-xl leading-29 ml-15">Foydalanuvchi</p>
          </div>
         

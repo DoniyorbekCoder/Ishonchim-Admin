@@ -7,12 +7,9 @@ import type { User } from '@/services/user';
 const route = useRoute()
 const router = useRouter()
 
+const TheModal = defineAsyncComponent(() => import('./TheModal.vue'))
 const TableTitle = defineAsyncComponent(() => import('@/components/user/TableTitle.vue'));
 const TableItem = defineAsyncComponent(() => import('@/components/user/TableItem.vue'))
-
-const TheModal = defineAsyncComponent(() =>
-  import('./TheModal.vue')
-)
 
 const items = ref<{isLoading: boolean, count: number, list: User[]}>({
     isLoading: false,
@@ -24,9 +21,6 @@ async function changeQuery(param: { key: string, value:number }) {
     const query = {
         ...route.query
     }
-    if (param.key == 'type') {
-      query['offset'] = '0'
-    }
     query[param.key] = String(param.value)
     await router.replace({ query })
     getItems()
@@ -35,9 +29,9 @@ async function changeQuery(param: { key: string, value:number }) {
 const modalRef = ref()
 const searchInput = ref('')
 async function getItems() {
-    const { type = 1, offset = 0 } = route.query
+    const { offset = 0 } = route.query
     OPEN_LOADING_MODAL()
-    const [error, response] = await getUsers(Number(type), searchInput.value, Number(offset))
+    const [error, response] = await getUsers(searchInput.value, Number(offset))
     CLOSE_LOADING_MODAL()
     items.value.count = response.count
     items.value.list = response.list
@@ -58,8 +52,8 @@ getItems()
                 <i class="icon-plus" />
                 <p class="text-sm text-white-primary font-medium leading-21 hidden md:block">Yangi foydalanuvchi qo‘shish</p>
             </button>
-            <div class="bg-white-primary flex items-center gap-5 p-5 pl-20 rounded" role="button">
-                <i class="icon-search" />
+            <div class="bg-white-primary flex items-center gap-5 p-5 px-10 rounded" role="button">
+                <img src="@/assets/images/search.png" class="w-18 h-18" alt="">
                 <input type="search" name="search" v-model="searchInput" @input="getItems" placeholder="Qidiruv"
                     class="placeholder:text-gray-primary text-black-primary focus:outline-none py-10 text-sm">
             </div>
@@ -68,7 +62,7 @@ getItems()
     <div class="w-full p-15 rounded-15 bg-white-primary">
         <table-title />
         <div class="rounded text-sm text-black-primary font-medium my-15 gap-10">
-            <table-item  v-for="item in items.list" :key="item.id" :id="item.id" :username="item.username" :password="item.password" :firstName="item.firstName" :lastName="item.lastName" :birthday="item.birthday" :isMan="item.isMan" :bio="item.bio" :balance="item.balance" :phone="item.phone" :jobs="item.jobs" :token="item.token" :type="item.type" :image="item.image" :passport="item.passport"  />
+            <table-item  v-for="item in items.list" :key="item.id" :id="item.id" :username="item.username" :phone="item.phone" :passport="item.passport" :contractCount="item.contractCount" :partnerCount="item.partnerCount" />
         </div>
     </div>
     <base-pagination :active="Math.trunc(Number(route.query.offset)/6) + 1 || 1" :perPage="6" :items="items.count" @change="(val:number) => changeQuery({key: 'offset', value: (val - 1)*6})"/>

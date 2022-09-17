@@ -1,10 +1,14 @@
 export interface List {
-  list: {value: string, code: string}[]
+  list: { value: string, code: string }[]
 }
 
-export interface Category {
+export interface TypeLang {
   id: number | null,
-  name: List
+  name: {
+    uz: string | null,
+    ru: string | null,
+    eng: string | null,
+  }
 }
 
 export interface ListItem {

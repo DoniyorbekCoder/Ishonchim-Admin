@@ -51,10 +51,10 @@ function openModal(val: any) {
           <i class="icon-plus" />
           <p class="text-sm text-white-primary leading-21">Yangi kategoriya qo‘shish</p>
         </button>
-        <div class="bg-white-primary flex items-center gap-5 p-5 pl-20 rounded" role="button">
-          <i class="icon-search" />
-          <input type="search" name="search" v-model="searchInput" @input="getItems" placeholder="Qidiruv"
-            class="placeholder:text-gray-primary text-black-primary focus:outline-none py-10 text-sm">
+        <div class="bg-white-primary flex items-center gap-5 p-5 px-10 rounded" role="button">
+            <img src="../../assets/images/search.png" class="w-18 h-18" alt="">
+            <input type="search" name="search" v-model="searchInput" @input="getItems" placeholder="Qidiruv"
+              class="placeholder:text-gray-primary text-black-primary focus:outline-none py-10 text-sm">
         </div>
       </div>
     </div>

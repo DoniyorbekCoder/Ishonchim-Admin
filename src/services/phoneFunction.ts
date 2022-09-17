@@ -1,5 +1,4 @@
 export function phoneNum(phone: string) {
-
    const country = phone.slice(0, 4);
    const code = phone.slice(4, 6);
    const num1 = phone.slice(6, 9);

@@ -2,21 +2,12 @@
 import { phoneNum } from '@/services/phoneFunction';
 
 const props = defineProps({
-   id:        { type: Number,  required: true },
-   username:  { type: String,  required: true },
-   password:  { type: String,  required: true },
-   firstName: { type: String,  required: true },
-   lastName:  { type: String,  required: true },
-   birthday:  { type: String,  required: true },
-   isMan:     { type: Boolean, required: true },
-   bio:       { type: String,  required: true },
-   balance:   { type: Number,  required: true },
-   phone:     { type: String,  required: true },
-   jobs:      { type: String,  required: true },
-   token:     { type: String,  required: true },
-   type:      { type: String,  required: true },
-   image:     { type: String,  required: true },
-   passport:  { type: Object,  required: true },
+   id:            { type: Number, required: true },
+   username:      { type: String, required: true },
+   // phone:         { type: String, required: true },
+   passport:      { type: Object, required: true },
+   contractCount: { type: Number, required: true },
+   partnerCount:  { type: Number, required: true },
 })
 </script>
 
@@ -28,12 +19,12 @@ const props = defineProps({
          </div>
          <p>{{props.id}}</p>
       </div>
-      <p class="w-150">{{props.username}}</p>
+      <p class="w-150 line-clamp-1">{{props.username}}</p>
       <p class="w-200">{{phoneNum('+998978965566')}}</p>
-      <p class="w-115">{{props.passport.number}}</p>
-      <p class="w-115">15ta</p>
+      <p class="w-115">AA 0000001</p>
+      <p class="w-115">{{props.contractCount}}ta</p>
       <div class="w-175 flex justify-between items-center">
-         <p>10ta</p>
+         <p>{{props.partnerCount}}ta</p>
          <div class="w-40 h-40 rounded-full bg-white-secondary flex items-center justify-center">
             <img src="@/assets/images/arrow-right-s.png" class="w-20 h-20" alt="">
          </div>

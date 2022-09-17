@@ -16,11 +16,11 @@
                 <p class="text-black-primary text-xl font-bold">Passport bo‘yicha</p>
                 <div class="flex gap-15 items-center">
                     <button class="bg-blue-secondary border border-blue-primary flex items-center px-30 py-15 gap-5 rounded" role="button" @click="openModal">
-                        <i class="icon-plus" />
+                        <img src="@/assets/images/filter.png" class="w-21 h-21" alt="">
                         <p class="text-sm font-medium text-blue-primary leading-17 hidden md:block">Filterni ochish</p>
                     </button>
-                    <div class="bg-white-primary flex items-center gap-5 p-5 pl-20 rounded" role="button">
-                        <i class="icon-search" />
+                    <div class="bg-white-primary flex items-center gap-5 p-5 px-10 rounded" role="button">
+                        <img src="../../assets/images/search.png" class="w-18 h-18" alt="">
                         <input type="search" name="search" v-model="searchInput" @input="getItems" placeholder="Qidiruv"
                             class="placeholder:text-gray-primary text-black-primary focus:outline-none py-10 text-sm">
                     </div>
