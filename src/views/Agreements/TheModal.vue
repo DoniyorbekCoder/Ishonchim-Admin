@@ -1,67 +1,65 @@
 <script setup lang="ts">
-import { inputDate, postPutCategory, reset, tabs } from '@/services/categories';
-import type { Category, Form } from '@/services/categories'
-import { defineAsyncComponent, reactive, ref } from 'vue'
-const Editor =  defineAsyncComponent(() =>
-    import('@/components/TextEditor.vue')
-)
+import { reactive, ref } from 'vue'
+// import { reset } from '@/services/agreement'
+import type { Contract, Form } from '@/services/agreement'
+
+const tab = ref(1)
 const imageRef = ref()
 const emit = defineEmits(["submit", "toast"])
-const title = reactive({
-    data: {
-        code: 'oz',
-        lang: 'O‘zbek tilida',
-        project: 'Nomi',
-        index: 2,
-    }
-})
-const data = reactive<{display: boolean, formInfo: Form, error: boolean}>({
+const data = reactive<{ display: boolean, error: boolean }>({
     display: false,
     error: false,
-    formInfo: {
-        id: null,
-        name: { list: [{code: 'ar', value: ''}, {code: 'eng',value: ''},{code: 'oz',value: ''},{code:'ru',value: ''},{code: 'uz',value: ''}]},
-        image: null,
-        type: ''
-    }
+    // formInfo: {
+    //     id: null,
+
+    // }
 });
 
-async function assign(item: Category) {
-    Object.assign(data.formInfo, item)
-    setTimeout(() => {
-        imageRef.value.setImage(item.image)
-    }, 100)
+async function assign(item: Contract) {
+    // Object.assign(data.formInfo, item)
+    // setTimeout(() => {
+    //     imageRef.value.setImage(item.image)
+    // }, 100)
 }
 
-function open(item: Category) {
-    title.data = tabs[0]
+function open(item: Contract) {
     data.display = true
-    if (item.id !== undefined) {
-        assign(item)
-    } else {
-        reset(data.formInfo)
-    }
+    // if (item.id !== undefined) {
+    //     assign(item)
+    // } else {
+    //     reset(data.formInfo)
+    // }
 }
 
 async function submit() {
     emit("submit")
-    const image = await imageRef.value.getImage()
-    postPutCategory(data.formInfo, image).then((res) => {
-    if(data.formInfo.id != null && res[1] !== null) {
-        emit('toast', 'Kategoriya yangilandi')
-    } else if(res[1] !== null) {
-        emit('toast', 'Yangi kategoriya qo‘shildi')
-    }
-    })
+    // const image = await imageRef.value.getImage()
+    // postPutCategory(data.formInfo, image).then((res) => {
+    // if(data.formInfo.id != null && res[1] !== null) {
+    //     emit('toast', 'Kategoriya yangilandi')
+    // } else if(res[1] !== null) {
+    //     emit('toast', 'Yangi kategoriya qo‘shildi')
+    // }
+    // })
     data.display = false
 }
 
-function showError() {
-    data.error = true
-    setTimeout(() => {
-    data.error = false
-    }, 3000);
+function tabClick(num: number) {
+    if(num == 1 && tab.value != 1){
+        tab.value = 1;
+    } else if(num == 2 && tab.value != 2){
+        tab.value = 2;
+    } else if(num == 3 && tab.value != 3){
+        tab.value = 3;
+    } else if(num == 1 && tab.value == 1){
+        tab.value = 0;
+    } else if(num == 2 && tab.value == 2){
+        tab.value = 0;
+    } else if(num == 3 && tab.value == 3){
+        tab.value = 0;
+    }
 }
+
 defineExpose({
     open
 })
@@ -69,35 +67,84 @@ defineExpose({
 
 <template>
     <Modal v-if="data.display">
-    <div class="openModal h-screen flex items-center fixed top-0 left-0 w-full justify-center">
-        <div class="bg-white-primary p-8 shadow-lg rounded-2xl z-0" :class="data.display ? 'z-0 scale-100 animate-blowUp': ''">
-        <div class="flex justify-between">
-            <h2 class="text-xl font-semibold text-black-primary">{{ data.formInfo.id === null ? 'Yangi kategoriya qo‘shish' : 'Tahrirlash' }}</h2>
-            <i @click="reset(data.formInfo); data.display = false" class="cursor-pointer icon-close text-xl" />
-        </div>
-        <form action="" @submit.prevent="submit" class="w-102">
-            <div class="flex flex-col mt-12 mb-8">
-                <div v-if="data.error" class="text-red-primary mb-3.5">
-                    Iltimos, kategoriya suratini joylang!
+        <div class="openModal h-screen flex fixed top-0 left-0 w-full justify-center items-center">
+            <div class="bg-white-primary p-20 md:p-30 shadow-lg rounded-15 z-0 w-483" :class="data.display ? 'z-0 scale-100 animate-blowUp' : ''">
+                <div class="flex items-center justify-between mb-15">
+                    <h2 class="text-xl font-semibold text-black-primary">Shartnomalarni filterlash</h2>
+                    <img @click="data.display = false; tab = 1" src="@/assets/images/close-black.png" class="cursor-pointer w-24 h-24" alt="">
+                    <!-- <img @click="reset(data.formInfo); data.display = false" src="@/assets/images/close-black.png" class="cursor-pointer w-24 h-24" alt=""> -->
                 </div>
-                <div class="flex items-end">
-                    <div class="border border-gray-secondary rounded h-30 w-30 bg-gray-primary mr-3.5">
-                        <image-box ref="imageRef" class="rounded h-30 w-30" @invalid-input="showError"/>
+
+                <div class="mb-30 ">
+                    <div class="contentBox overflow-hidden bg-white-primary" :class="tab == 1 ? 'active' : ''">
+                        <div class="header flex items-center justify-between py-15" @click="tabClick(1)">
+                            <p class="font-semibold text-base2 leading-21 text-black-primary">Tartiblash</p>
+                            <div class="w-40 h-40 flex items-center justify-center bg-white-secondary rounded-full border border-gray-secondary">
+                                <img class="w-21 h-21" src="@/assets/images/arrow.png" alt="">
+                            </div>
+                        </div>
+                        <div class="title text-black-primary pb-10">
+                            <form action="/action_page.php">
+                              <input type="checkbox" id="vehicle1" name="vehicle1" value="Bike">
+                              <label for="vehicle1"> I have a bike</label><br>
+                              <input type="checkbox" id="vehicle2" name="vehicle2" value="Car">
+                              <label for="vehicle2"> I have a car</label><br>
+                              <input type="checkbox" id="vehicle3" name="vehicle3" value="Boat">
+                              <label for="vehicle3"> I have a boat</label><br><br>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="contentBox overflow-hidden bg-white-primary border-y border-gray-secondary" :class="tab == 2 ? 'active' : ''">
+                        <div class="header flex items-center justify-between py-15" @click="tabClick(2)">
+                            <p class="font-semibold text-base2 leading-21 text-black-primary">Tartiblash</p>
+                            <div class="w-40 h-40 flex items-center justify-center bg-white-secondary rounded-full border border-gray-secondary">
+                                <img class="w-21 h-21" src="@/assets/images/arrow.png" alt="">
+                            </div>
+                        </div>
+                        <div class="title text-black-primary pb-10">
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. A quam molestiae autem nemo! Iusto ipsa optio adipisci sequi minus aliquid, ducimus, maxime, perferendis quia cum deserunt nulla quo assumenda beatae!</p>
+                        </div>
+                    </div>
+                    <div class="contentBox overflow-hidden bg-white-primary" :class="tab == 3 ? 'active' : ''">
+                        <div class="header flex items-center justify-between py-15" @click="tabClick(3)">
+                            <p class="font-semibold text-base2 leading-21 text-black-primary">Tartiblash</p>
+                            <div class="w-40 h-40 flex items-center justify-center bg-white-secondary rounded-full border border-gray-secondary">
+                                <img class="w-21 h-21" src="@/assets/images/arrow.png" alt="">
+                            </div>
+                        </div>
+                        <div class="title text-black-primary pb-10">
+                            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. A quam molestiae autem nemo! Iusto ipsa optio adipisci sequi minus aliquid, ducimus, maxime, perferendis quia cum deserunt nulla quo assumenda beatae!</p>
+                        </div>
                     </div>
                 </div>
-                <div class="flex justify-between border border-gray-secondary bg-gray-primary rounded-3xl mt-3.5">
-                    <div v-for="(item) in tabs" :key="item.code" class="cursor-pointer text-sm px-6 py-3.5 rounded-3xl" :class="title.data.code === item.code ? 'bg-green-primary text-white-primary': 'text-black-secondary'" @click="title.data = item">
-                        {{item.lang}}
-                    </div>
-                </div>
-                <div class="flex flex-col">
-                    <input type="text" v-for="(item) in data.formInfo.name.list" v-show="item.code == title.data.code" :key="item.code" v-model="data.formInfo.name.list[title.data.index].value" class="border border-gray-secondary mt-3.5 w-100 h-11.5 bg-gray-primary text-sm leading-4 rounded py-4 px-5 placeholder:text-black-secondary focus:outline-none text-black-primary font-medium placeholder:font-normal" :placeholder="title.data.project" required>
-                </div>
+
+                <button class="bg-blue-primary flex items-center px-30 py-15 gap-5 rounded text-sm font-medium text-white-primary leading-21" role="button" type="submit">Filterlash</button>
             </div>
-            <button class="px-8 py-3.5 bg-green-primary text-white-primary rounded" type="submit">{{ data.formInfo.id === null ? 'Qo‘shish' : 'O‘zgarishlarni saqlash' }}</button>
-        </form>
         </div>
-    </div>
     </Modal>
 </template>
+
+<style scoped>
+    .contentBox {
+        width: 100%;
+        height: 70px;
+        transition: 0.5s;
+        overflow: hidden;
+    }
+    .contentBox.active {
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+    }
+    .contentBox  .title {
+        opacity: 0;
+        transition: 0.5s;
+        transform: translateY(200px);
+    }
+    .contentBox.active .title {
+        opacity: 1;
+        transition: 0.5s;
+        transform: translateY(0px);
+    }
+</style>
     

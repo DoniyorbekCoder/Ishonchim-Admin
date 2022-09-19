@@ -11,7 +11,7 @@ import { CLOSE_LOADING_MODAL, OPEN_LOADING_MODAL, OPEN_DELETE_MODAL } from '@/st
       <div class="flex items-center justify-between">
          <div class="flex items-center">
             <div @click="router.go(-1)" class="bg-white-primary flex items-center justify-center shrink-0 rounded-full h-51 w-51" role="button">
-               <i class="icon-arrow-left"></i>
+               <img class="w-24 h-24" src="@/assets/images/arrow-left.png" alt="">
             </div>
             <p class="font-bold text-black-primary text-xl leading-29 ml-15">Passport bo‘yicha</p>
          </div>

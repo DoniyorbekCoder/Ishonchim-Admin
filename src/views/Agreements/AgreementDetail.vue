@@ -1,12 +1,120 @@
 <script setup lang="ts">
-import { reactive, watch, ref } from 'vue';
-// import { date } from '../../services/timeFunctions'
-import { useRoute } from 'vue-router'
 import router from '@/router'
-import { CLOSE_LOADING_MODAL, OPEN_LOADING_MODAL, OPEN_DELETE_MODAL } from '@/store';
-const newLocal = "\u0062\u0067\u002d\u0077\u0068\u0069\u0074\u0065\u002d\u0073\u0065\u0063\u006f\u006e\u0064\u0061\u0072\u0079\u0020\u0072\u006f\u0075\u006e\u0064\u0065\u0064";
-// const route = useRoute()
+import { useRoute } from 'vue-router';
+import { reactive, ref, defineAsyncComponent } from 'vue';
+import { CLOSE_LOADING_MODAL, OPEN_LOADING_MODAL, OPEN_DELETE_MODAL, _deleteModal, _loading, _toast } from '@/store';
 
+import { getContract } from '@/services/agreement';
+import type { Contract } from '@/services/agreement';
+
+const route = useRoute()
+const data = reactive<{formInfo: Contract}>({
+  formInfo: {
+    id: 0,
+    lender: {
+        id: 0,
+        username: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        birthday: '',
+        isMan: false,
+        bio: '',
+        balance: 0,
+        phone: '',
+        jobs: '',
+        token: '',
+        type: '',
+        image: '',
+        inn: '',
+        passport: { number: '', pnfl: '', selfie: '', image: ''},
+        companies: [],
+        partners: [],
+        code: '',
+        contractCount: 0,
+        partnerCount: 0
+    },
+    debtor: {
+        id: 0,
+        username: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        birthday: '',
+        isMan: false,
+        bio: '',
+        balance: 0,
+        phone: '',
+        jobs: '',
+        token: '',
+        type: '',
+        image: '',
+        inn: '',
+        passport: { number: '', pnfl: '', selfie: '', image: ''},
+        companies: [],
+        partners: [],
+        code: '',
+        contractCount: 0,
+        partnerCount: 0
+    },
+    type: {
+        id: null,
+        name: {uz: '', ru: '', eng: ''}
+    },
+    returnType: {
+        id: null,
+        name: {uz: '', ru: '', eng: ''}
+    },
+    amount: 0,
+    lenderConditions: '',
+    debtorConditions: '',
+    description: '',
+    manager: {
+        id: 0,
+        username: '',
+        password: '',
+        firstName: '',
+        lastName: '',
+        birthday: '',
+        isMan: false,
+        bio: '',
+        balance: 0,
+        phone: '',
+        jobs: '',
+        token: '',
+        type: '',
+        image: '',
+        inn: '',
+        passport: { number: '', pnfl: '', selfie: '', image: ''},
+        companies: [],
+        partners: [],
+        code: '',
+        contractCount: 0,
+        partnerCount: 0
+    },
+    currency: {
+        id: null,
+        name: {uz: '', ru: '', eng: ''}
+    },
+    debtorStatus: '',
+    lenderStatus: '',
+    status: '',
+    createdAt: '',
+    updatedAt: '',
+    payments: [],
+  },
+});
+
+async function assign() {
+  const id = JSON.parse(String(route.query.id))
+  OPEN_LOADING_MODAL()
+  const [error, response] = await getContract(id)
+  const item = response
+  CLOSE_LOADING_MODAL()
+  Object.assign(data.formInfo, response)
+}
+
+assign()
 </script>
 
 <template>
@@ -14,13 +122,13 @@ const newLocal = "\u0062\u0067\u002d\u0077\u0068\u0069\u0074\u0065\u002d\u0073\u
     <div class="flex items-center justify-between mb-36">
         <div class="flex items-center">
             <div @click="router.go(-1)" class="bg-white-primary flex items-center justify-center shrink-0 rounded-full h-51 w-51" role="button">
-                <i class="icon-arrow-left"></i>
+                <img class="w-24 h-24" src="@/assets/images/arrow-left.png" alt="">
             </div>
             <p class="font-bold text-black-primary text-xl leading-29 ml-15">Shartnoma</p>
         </div>
 
-        <div role="button" class="bg-red-secondary w-44 h-44 shrink-0 flex items-center justify-center rounded-full border border-red-primary" @click="OPEN_DELETE_MODAL({ id: data.formInfo.id, text: 'Diqqat, maqolani o‘chirishga aminmisiz?', title: data.formInfo.title.list[2].value, url: 'article'})">
-            <i class="icon-trash-can"></i>
+        <div role="button" class="bg-red-secondary w-44 h-44 shrink-0 flex items-center justify-center rounded-full border border-red-primary" @click="OPEN_DELETE_MODAL({ id: data.formInfo.id, text: 'Diqqat, shartnoma o‘chirishga aminmisiz?', title: 'title', url: ''})">
+            <img class="w-24 h-24" src="@/assets/images/delete.png" alt="">
         </div>
     </div>
 

@@ -1,24 +1,75 @@
 <script setup lang="ts">
-import { reactive, ref, defineAsyncComponent } from 'vue';
-import { useRoute } from 'vue-router'
 import router from '@/router'
-import { CLOSE_LOADING_MODAL, OPEN_LOADING_MODAL, OPEN_DELETE_MODAL } from '@/store';
+import { useRoute } from 'vue-router';
+import { reactive, ref, defineAsyncComponent } from 'vue';
+import { CLOSE_LOADING_MODAL, OPEN_LOADING_MODAL, OPEN_DELETE_MODAL, _deleteModal, _loading, _toast } from '@/store';
 
+import { getUser } from '@/services/user';
+import type { User } from '@/services/user';
+
+const TheModal = defineAsyncComponent(() => import('./TheModal.vue'))
+const AgreementModal = defineAsyncComponent(() => import('../Companies/CompanyModal.vue'))
 const AgreementTableTitle = defineAsyncComponent(() => import('@/components/agreement/TableTitle.vue'));
 const AgreementTableItem = defineAsyncComponent(() => import('@/components/agreement/TableItem.vue'));
 const UserTableTitle = defineAsyncComponent(() => import('@/components/user/TableTitle.vue'));
 const UserTableItem = defineAsyncComponent(() => import('@/components/user/TableItem.vue'));
-// const route = useRoute()
 
+const modalRef = ref()
+const route = useRoute()
+const data = reactive<{formInfo: User}>({
+  formInfo: {
+    id: 0,
+    username: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    birthday: '',
+    isMan: false,
+    bio: '',
+    balance: 0,
+    phone: '',
+    jobs: '',
+    token: '',
+    type: '',
+    image: '',
+    inn: '',
+    passport: { number: '', pnfl: '', selfie: '', image: ''},
+    companies: [],
+    partners: [],
+    code: '',
+    contractCount: 0,
+    partnerCount: 0
+  },
+});
+
+async function assign() {
+  const id = JSON.parse(String(route.query.id))
+  OPEN_LOADING_MODAL()
+  const [error, response] = await getUser(id)
+  const item = response
+  CLOSE_LOADING_MODAL()
+  Object.assign(data.formInfo, response)
+}
+
+
+function openModal(TheModal: any) {
+  modalRef.value.open(TheModal)
+}
+
+function openAgreementModal(AgreementModal: any) {
+  modalRef.value.open(AgreementModal)
+}
+
+assign()
 </script>
 
 <template>
    <div class="w-full space-y-30">
       <div class="flex items-center justify-between mb-36">
          <div class="flex items-center">
-            <router-link to="/users" class="bg-white-primary flex items-center justify-center shrink-0 rounded-full h-51 w-51" role="button">
+            <div @click="router.go(-1)" class="bg-white-primary flex items-center justify-center shrink-0 rounded-full h-51 w-51" role="button">
                <img class="w-24 h-24" src="@/assets/images/arrow-left.png" alt="">
-            </router-link>
+            </div>
             <p class="font-bold text-black-primary text-xl leading-29 ml-15">Foydalanuvchi</p>
          </div>
         
@@ -26,7 +77,7 @@ const UserTableItem = defineAsyncComponent(() => import('@/components/user/Table
             <button role="button" class="bg-yellow-secondary w-44 h-44 shrink-0 flex items-center justify-center rounded-full border border-yellow-primary" @click="openModal">
                <img class="w-24 h-24" src="@/assets/images/edit.png" alt="">
             </button>
-            <div role="button" class="bg-red-secondary w-44 h-44 shrink-0 flex items-center justify-center rounded-full border border-red-primary" @click="OPEN_DELETE_MODAL({ id: 5, text: 'Diqqat, maqolani o‘chirishga aminmisiz?', title: 'title', url: 'article'})">
+            <div role="button" class="bg-red-secondary w-44 h-44 shrink-0 flex items-center justify-center rounded-full border border-red-primary" @click="OPEN_DELETE_MODAL({ id: 5, text: 'Diqqat, foydalanuvchini o‘chirishga aminmisiz?', title: 'title', url: 'article'})">
                <img class="w-24 h-24" src="@/assets/images/delete.png" alt="">
             </div>
          </div>
@@ -68,7 +119,7 @@ const UserTableItem = defineAsyncComponent(() => import('@/components/user/Table
       <div class="w-full bg-white-primary rounded-15 p-20 md:p-25 lg:p-30">
          <div class="flex items-end justify-between mb-15">
             <p class="font-semibold text-base2 leading-21 text-black-primary">Shartnomalari</p>
-            <button class="bg-blue-primary flex items-center px-30 py-15 gap-5 rounded" role="button" @click="openModal">
+            <button class="bg-blue-primary flex items-center px-30 py-15 gap-5 rounded" role="button" @click="openAgreementModal">
                <img class="w-24 h-24" src="@/assets/images/add-white.png" alt="">
                <p class="text-sm text-white-primary leading-21">Yangi shartnoma qo‘shish</p>
            </button>
@@ -87,7 +138,9 @@ const UserTableItem = defineAsyncComponent(() => import('@/components/user/Table
             <UserTableItem v-for="n in 2" />
          </div>
       </div>
-           
+
+      <the-modal ref="modalRef" @submit="OPEN_LOADING_MODAL" @toast="val => OPEN_NOTIFICATION({text: val, callback: assign })"/>
+      <AgreementModal ref="modalRef" @submit="OPEN_LOADING_MODAL" @toast="val => OPEN_NOTIFICATION({text: val, callback: assign })"/>
    </div>
 </template>
 

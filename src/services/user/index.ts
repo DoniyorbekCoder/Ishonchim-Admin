@@ -23,7 +23,7 @@ export function reset(obj: Form) {
     obj.inn = '',
     obj.passport = {
       number: '',
-      pnfl: null,
+      pnfl: '',
       selfie: '',
       image: '',
     },

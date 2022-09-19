@@ -5,11 +5,11 @@ import router from '@/router'
 import { deleteItem } from '@/services/common';
 const emit = defineEmits(["submit"]);
 async function submit() {
-  const repsonse = await deleteItem({ id: _deleteModal.id }, _deleteModal.url).then(res => {
-  })
-  if (_deleteModal.callback === undefined) {
-    router.go(-1)
-  }
+  // const repsonse = await deleteItem({ id: _deleteModal.id }, _deleteModal.url).then(res => {
+  // })
+  // if (_deleteModal.callback === undefined) {
+  //   router.go(-1)
+  // }
   CLOSE_DELETE_MODAL()
 }
 
@@ -26,7 +26,7 @@ async function submit() {
           <img src="@/assets/images/close-black.png" class="cursor-pointer icon-close w-24 h-24" @click="CLOSE_DELETE" />
         </div>
         <div class="flex flex-col my-30">
-          <p class="text-lg font-semibold text-black-primary">Diqqat, foydalanuvchini o‘chirishga aminmisiz?{{_deleteModal.text}}</p>
+          <p class="text-lg font-semibold text-black-primary">{{_deleteModal.text}}</p>
           <p class="text-sm text-black-secondary leading-4 py-1.5 break-words">{{_deleteModal.title}}</p>
         </div>
         <button @click="submit" class="font-medium px-30 py-15 bg-red-primary text-white-primary rounded" type="button">O‘chirish</button>

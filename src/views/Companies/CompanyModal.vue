@@ -26,13 +26,13 @@ const data = reactive<{ display: boolean, formInfo: Form, error: boolean }>({
       inn: '',
       passport: {
          number: '', 
-         pnfl: null,
+         pnfl: '',
          selfie: '', 
          image: '', 
       },
-      // companies: null,
-      // partners: null,
-      // code: '',
+      companies: [],
+      partners: [],
+      code: '',
       contractCount: null,
       partnerCount: null
    }
@@ -86,7 +86,7 @@ defineExpose({
             :class="data.display ? 'z-0 scale-100 animate-blowUp' : ''">
             <div class="flex items-center justify-between mb-30">
                <h2 class="text-xl font-semibold text-black-primary">{{ data.formInfo.id === null ? 'Yangi kompaniya qo‘shish' : 'Tahrirlash' }}</h2>
-               <img @click="reset(data.formInfo); data.display = false" src="@/assets/images/close-black.png" class="cursor-pointer w-24 h-24" alt="">
+               <img @click="reset(data.formInfo); data.display = false; openTab = 1" src="@/assets/images/close-black.png" class="cursor-pointer w-24 h-24" alt="">
             </div>
 
             <form @submit.prevent="submit" class="space-y-30" :class="openTab == 1 ? 'min-w-480' : 'min-w-480 md:min-w-570 lg:min-w-800'">

@@ -49,7 +49,7 @@ export interface Form {
 
 export interface Passport {
    number: string | null, 
-   pnfl: number | null,
+   pnfl: string | null,
    selfie: string | null, 
    image: string | null, 
 }

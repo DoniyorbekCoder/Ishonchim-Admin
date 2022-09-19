@@ -2,11 +2,12 @@
 import { defineAsyncComponent, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { _deleteModal, _loading, _toast, OPEN_DELETE_MODAL, OPEN_LOADING_MODAL, CLOSE_LOADING_MODAL, OPEN_NOTIFICATION } from '@/store'
-import { getContracts } from '@/services/contract';
-import type { Contract } from '@/services/contract';
+import { getContracts } from '@/services/agreement';
+import type { Contract } from '@/services/agreement';
 const route = useRoute()
 const router = useRouter()
 
+const TheModal = defineAsyncComponent(() => import('./TheModal.vue'))
 const TableTitle = defineAsyncComponent(() => import('@/components/agreement/TableTitle.vue'));
 const TableItem = defineAsyncComponent(() => import('@/components/agreement/TableItem.vue'));
 
@@ -31,8 +32,6 @@ async function getItems() {
     const { offset = 0 } = route.query
     OPEN_LOADING_MODAL()
     const [error, response] = await getContracts(searchInput.value, Number(offset))
-    console.log(response);
-    
     CLOSE_LOADING_MODAL()
     items.value.count = response.count
     items.value.list = response.list
@@ -67,6 +66,6 @@ getItems()
             </div>
         </div>
         <base-pagination :active="Math.trunc(Number(route.query.offset)/12) + 1 || 1" :perPage="12" :items="items.count" @change="(val:number) => changeQuery({key: 'offset', value: (val - 1)*12})"/>
-        <!-- <the-modal ref="modalRef" @submit="OPEN_LOADING_MODAL" @toast="val => OPEN_NOTIFICATION({text: val, callback: getItems })"/> -->
+        <the-modal ref="modalRef" @submit="OPEN_LOADING_MODAL" @toast="val => OPEN_NOTIFICATION({text: val, callback: getItems })"/>
     </div>
 </template>
