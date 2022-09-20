@@ -1,7 +1,7 @@
 <script setup lang="ts">
    const props = defineProps({
-      id:             { type: Number, required: true },
-      amount:         { type: Number, required: true },
+      id:             { type: Number, required: false },
+      amount:         { type: Number, required: false },
       // phone:          { type: String, required: true },
       // passport:       { type: Object, required: true },
       // contractCount:  { type: Number, required: true },

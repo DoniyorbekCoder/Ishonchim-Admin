@@ -2,10 +2,6 @@
   "links":[
     {
       "path": "/",
-      "content": "Dashboard"
-    },
-    {
-      "path": "/agreements",
       "content": "Shartnomalar"
     },
     {

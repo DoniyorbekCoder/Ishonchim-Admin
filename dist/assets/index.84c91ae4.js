@@ -1,0 +1,1 @@
+import"./index.6de31075.js";function l(n){n.id=null,n.username="",n.password="",n.firstName="",n.lastName="",n.birthday="",n.isMan=null,n.bio="",n.balance=null,n.phone="",n.jobs="",n.token="",n.type="",n.image="",n.inn="",n.passport={number:"",pnfl:null,selfie:"",image:""},n.companies=null,n.partners=null,n.code="",n.contractCount=null,n.partnerCount=null}export{l as r};

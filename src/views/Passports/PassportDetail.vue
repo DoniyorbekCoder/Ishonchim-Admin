@@ -53,7 +53,7 @@ import { CLOSE_LOADING_MODAL, OPEN_LOADING_MODAL, OPEN_DELETE_MODAL } from '@/st
             <i class="icon-plus" />
             <p class="text-sm font-medium text-white-primary leading-21 hidden md:block">Tasdiqlash</p>
          </button>
-         <button class="bg-red-secondary border border-red-primary flex items-center px-30 py-15 gap-5 rounded" role="button" @click="openModal">
+         <button class="bg-red-secondary border border-red-primary flex items-center px-30 py-15 gap-5 rounded" role="button"> <!-- @click="openModal" -->
             <i class="icon-close" />
             <p class="text-sm font-medium text-red-primary leading-21 hidden md:block">Rad etish</p>
          </button>

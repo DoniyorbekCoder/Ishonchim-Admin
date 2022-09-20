@@ -53,8 +53,8 @@ function openModal(val: any) {
         </button>
         <div class="bg-white-primary flex items-center gap-5 p-5 px-10 rounded" role="button">
             <img src="../../assets/images/search.png" class="w-18 h-18" alt="">
-            <input type="search" name="search" v-model="searchInput" @input="getItems" placeholder="Qidiruv"
-              class="placeholder:text-gray-primary text-black-primary focus:outline-none py-10 text-sm">
+            <!-- <input type="search" name="search" v-model="searchInput" @input="getItems" placeholder="Qidiruv"
+              class="placeholder:text-gray-primary text-black-primary focus:outline-none py-10 text-sm"> -->
         </div>
       </div>
     </div>

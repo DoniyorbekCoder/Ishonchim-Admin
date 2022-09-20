@@ -1,11 +1,11 @@
 <script setup lang="ts">
     const props = defineProps({
-       id:            { type: Number, required: true },
-       username:      { type: String, required: true },
-       inn:           { type: String, required: true },
-    //    menejerCount:  { type: Number, required: true },
-       contractCount: { type: Number, required: true },
-       partnerCount:  { type: Number, required: true },
+       id:            { type: Number, required: false },
+       username:      { type: String, required: false },
+       inn:           { type: String, required: false },
+    //    menejerCount:  { type: Number, required: false },
+       contractCount: { type: Number, required: false },
+       partnerCount:  { type: Number, required: false },
     })
     </script>
     

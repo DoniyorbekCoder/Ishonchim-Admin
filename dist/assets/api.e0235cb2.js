@@ -1,0 +1,1 @@
+import{H as r}from"./index.6de31075.js";async function s(n="",a=0){try{const t=await r.get("companies",{params:{size:6,offset:a,search:n}});return[null,t.data]}catch(t){return[t,null]}}async function o(n){try{const a=await r.get(`company?id=${n}`);return[null,a.data]}catch(a){return[a,null]}}export{o as a,s as g};

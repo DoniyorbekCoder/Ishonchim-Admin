@@ -1,0 +1,1 @@
+import{H as n}from"./index.6de31075.js";async function s(t="",r=0){try{const a=await n.get("admin/users",{params:{size:6,offset:r,search:t}});return[null,a.data]}catch(a){return[a,null]}}async function o(t){try{const r=await n.get(`admin/user?id=${t}`);return[null,r.data]}catch(r){return[r,null]}}export{o as a,s as g};

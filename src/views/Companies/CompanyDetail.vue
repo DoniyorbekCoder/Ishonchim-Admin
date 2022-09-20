@@ -2,7 +2,7 @@
 import router from '@/router'
 import { useRoute } from 'vue-router';
 import { reactive, ref, defineAsyncComponent } from 'vue';
-import { CLOSE_LOADING_MODAL, OPEN_LOADING_MODAL, OPEN_DELETE_MODAL, _deleteModal, _loading, _toast } from '@/store';
+import { CLOSE_LOADING_MODAL, OPEN_LOADING_MODAL, OPEN_DELETE_MODAL, _deleteModal, _loading, _toast, OPEN_NOTIFICATION } from '@/store';
 
 import { getCompany } from '@/services/company';
 import type { Company } from '@/services/company';

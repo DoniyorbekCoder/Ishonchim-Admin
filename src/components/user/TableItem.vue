@@ -2,12 +2,12 @@
 import { phoneNum } from '@/services/phoneFunction';
 
 const props = defineProps({
-   id:            { type: Number, required: true },
-   username:      { type: String, required: true },
-   // phone:         { type: String, required: true },
-   passport:      { type: Object, required: true },
-   contractCount: { type: Number, required: true },
-   partnerCount:  { type: Number, required: true },
+   id:            { type: Number, required: false },
+   username:      { type: String, required: false },
+   // phone:         { type: String, required: false },
+   passport:      { type: Object, required: false },
+   contractCount: { type: Number, required: false },
+   partnerCount:  { type: Number, required: false },
 })
 </script>
 
